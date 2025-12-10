@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_soundstream
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: soundstream_db
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+    secrets:
+      - mysql_root_password
+    volumes:
+      - ./scripts:/scripts
+      - ./mycnf.cnf:/etc/mysql/conf.d/mycnf.cnf
+
+secrets:
+  mysql_root_password:
+    file: ./secrets/mysql_root_password.txt
